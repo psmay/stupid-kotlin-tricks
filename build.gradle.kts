@@ -1,5 +1,8 @@
+import org.jetbrains.dokka.gradle.DokkaTask
+
 plugins {
     kotlin("multiplatform") version "1.6.10"
+    id("org.jetbrains.dokka") version "1.6.10"
 }
 
 group = "com.psmay.stupid"
@@ -35,7 +38,7 @@ kotlin {
         else -> throw GradleException("Host OS is not supported in Kotlin/Native.")
     }
 
-    
+
     sourceSets {
         val commonMain by getting
         val commonTest by getting {
@@ -49,5 +52,16 @@ kotlin {
         val jsTest by getting
         val nativeMain by getting
         val nativeTest by getting
+    }
+}
+
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        register("allMain") {
+            sourceRoots.from(kotlin.sourceSets.getByName("commonMain").kotlin.srcDirs)
+            sourceRoots.from(kotlin.sourceSets.getByName("jvmMain").kotlin.srcDirs)
+            sourceRoots.from(kotlin.sourceSets.getByName("jsMain").kotlin.srcDirs)
+            sourceRoots.from(kotlin.sourceSets.getByName("nativeMain").kotlin.srcDirs)
+        }
     }
 }
