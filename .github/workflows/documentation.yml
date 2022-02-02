@@ -1,7 +1,7 @@
 # Borrowed from https://ryanharrison.co.uk/2020/04/12/kotlin-java-ci-with-github-actions.html
 # Borrowed Dokka task stuff from https://github.com/kwebio/kweb-core/blob/master/.github/workflows/build.yml
 
-name: Build
+name: Documentation
 
 on:
   push:
